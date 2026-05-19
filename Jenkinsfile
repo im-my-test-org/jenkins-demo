@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.10'
+        }
+    }
 
     stages {
         stage('Checkout') {
@@ -10,11 +14,7 @@ pipeline {
 
         stage('Setup') {
             steps {
-                sh '''
-                apt-get update
-                apt-get install -y python3 python3-pip
-                pip3 install -r requirements.txt
-                '''
+                sh 'pip install -r requirements.txt'
             }
         }
 
@@ -26,8 +26,9 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Build complete!'
+                sh 'echo "Build complete!"'
             }
         }
     }
 }
+``
